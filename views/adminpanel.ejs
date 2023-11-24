@@ -1,0 +1,102 @@
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/node_modules/bootswatch/dist/sketchy/bootstrap.min.css">
+
+  <style>
+    #product-list {
+       display: grid;
+       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+       gap: 20px;
+    }
+
+    .product-card {
+       border: 1px solid #ddd;
+       padding: 10px;
+       text-align: center;
+    }
+ </style>
+
+  <!-- Add other styles or meta tags as needed -->
+  <title>Skander Jneyeh</title>
+  <link rel="icon" style="width: 10px; height: auto;" type="image/png" href="/public/images/skaparis.jpg"  >
+
+</head>
+
+<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Skander Jneyeh</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="/">Home
+              <span class="visually-hidden">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact">Contact</a>
+          </li>
+
+         
+      </div>
+    </div>
+</nav>
+<form action="/admin" method="POST"  enctype="multipart/form-data" style="margin-left: 20px; max-width: 50rem;">
+
+
+    <legend style="margin-top: 20px;">Upload a product</legend>
+    
+
+
+    <div class="form-group">
+        <label  class="form-label mt-4">name of product</label>
+        <input  class="form-control" type="name" id="name" name="name" placeholder="Enter name of product">
+       
+      </div>
+
+      <div class="form-group">
+        <label class="col-form-label mt-4" for="price">Price</label>
+        <input type="price" name="price" class="form-control"  id="price">
+      </div>
+
+
+
+      <div class="form-group">
+        <label for="category" class="form-label mt-4">category Select</label>
+        <select class="form-select" id="category" name="category" type="category">
+          <option>Category1</option>
+          <option>Category2</option>
+          <option>Category3</option>
+          <option>Category4</option>
+          <option>Category5</option>
+        </select>
+      </div>
+
+
+      <div class="form-group">
+        <label for="image" class="form-label mt-4">Upload image</label>
+        <input class="form-control" type="file" id="image" name="image">
+    </div>
+      <button type="submit" class="btn btn-primary" style="margin-top: 30px;">Submit</button>
+
+
+
+
+
+
+
+</form>
+
+
+
+
+
+
+

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Checkout</title>
+  <!-- Add your styles or other meta tags as needed -->
+<style>
+.product-item {
+  display: flex;
+  align-items: center;
+}
+
+.product-image {
+  margin-right: 10px; /* Adjust as needed */
+}
+
+.product-image img {
+  max-width: 50px; /* Adjust as needed */
+  height: auto;
+}
+
+
+</style>
+  <!-- Include Bootstrap and Popper.js scripts -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/node_modules/bootswatch/dist/sketchy/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">Shopping Cart</h2>
+    </div>
+    <div class="card-body">
+      <% if (cartItems && Array.isArray(cartItems) && cartItems.length > 0) { %>
+        <ul class="list-group">
+            <% cartItems.forEach(item => { %>
+              <li class="list-group-item">
+                <div class="product-item">
+                  <div class="product-image">
+                    <img src="<%= item.path %>" alt="<%= item.name %> Image" class="img-fluid">
+                  </div>
+                  <div class="product-details">
+                    <h3><%= item.name %></h3>
+                    <p>Quantity: <%= item.quantity %></p>
+                    <p>Price: $<%= (item.price * item.quantity).toFixed(2) %></p>
+                    <!-- Add other item details as needed -->
+                  </div>
+                </div>
+              </li>
+            <% }); %>
+          </ul>
+        <!-- Add other checkout details and form elements -->
+        <form action="/complete-purchase" method="POST" class="mt-3">
+          <!-- Add form fields for user details, payment, etc. -->
+          <button type="submit" class="btn btn-primary">Complete Purchase</button>
+        </form>
+      <% } else { %>
+        <p>No items in the cart.</p>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
