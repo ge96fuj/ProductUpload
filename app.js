@@ -5,7 +5,11 @@ const path = require('path');
 const multer = require('multer');
 const MongoClient = require('mongodb').MongoClient
 const mongoose = require('mongoose');
+var ObjectId = require('mongodb').ObjectId; 
+
 let cardItems = []
+let lastId 
+loadLastId()
 
 const uri = "mongodb+srv://skovichh:55333932sD@projectdb.80hvk7x.mongodb.net/?retryWrites=true&w=majority"
 app.use(express.urlencoded({ extended: true }));
@@ -15,9 +19,11 @@ app.use(express.static('uploads'));
 app.use('/node_modules', express.static('node_modules'));
 
 const productSchema = new mongoose.Schema({
+    id: Number , 
     name: String,
     price: Number,
     category: String,
+    description : String , 
     imagePath: String,
  });
  
@@ -42,13 +48,25 @@ app.get('/products', async (req, res) =>  {
   const priceMin = req.query.priceMin;
   const priceMax = req.query.priceMax;
 
- 
+
+  const description = req.query.product
+  if(description!==undefined){
+
+   
+   const product = await findProductById(description)
+   console.log(product.name)
+
+    res.render('productdescription.ejs', { product});
+
+
+  }
+ else {
   const products = await loadProductFiltered(categoryFilter,priceMin,priceMax)
 
 
   // Build a query string based on your needs
 
-  res.render('index', { products});
+  res.render('index', { products});}
 });
 
 
@@ -62,9 +80,11 @@ app.get('/products', async (req, res) =>  {
   app.post('/admin', upload.single('image'), async (req, res) => {
 
     const newProduct = new Product({
+        id : ++lastId , 
         name: req.body.name,
         price: req.body.price,
         category: req.body.category,
+        description : req.body.description,
         imagePath: req.file ? req.file.filename : '', // Save the filename if an image is uploaded
      });
      
@@ -79,9 +99,8 @@ if(newProduct!= null){
         console.log('Connecting to MongoDB Atlas cluster...');
         await mongoClient.connect();
         console.log('Successfully connected to MongoDB Atlas!');
-        const db = mongoClient.db('ecommerce');
-        const collection = db.collection('productssss');
-
+        const db = mongoClient.db('ecommercee');
+        const collection = db.collection('products');
         await collection.insertOne(newProduct);
  
         
@@ -127,19 +146,65 @@ res.render('checkout', { cartItems });
 
 
 
-  async function loadProducts( ) {
+async function loadLastId() {
+  const uri = "mongodb+srv://skovichh:55333932sD@projectdb.80hvk7x.mongodb.net/?retryWrites=true&w=majority"
+
+  let mongoClient;
+  mongoClient = new MongoClient(uri);
 
 
-   
+
+  const newProduct = ({
+    id : 0 , 
+    name: 'id' ,
+    price: '0',
+    category: 'category',
+    description : 'description',
+    imagePath: 'nopath', // Save the filename if an image is uploaded
+ });
+
+
+
+
+try {
+    console.log('Connecting to MongoDB Atlas cluster...');
+    await mongoClient.connect();
+    console.log('Successfully connected to MongoDB Atlas!');
+    const db = mongoClient.db('ecommerce');
+    const collection = db.collection('id');
+    const cursor = await collection.find().toArray();
+    idd= cursor[0].id
+    lastId=cursor[0].id
+
+    
+} finally {
+    await mongoClient.close();
+}
+
+
+}
+
+
+
+
+
+
+
+  async function findProductById(idd ) {
+    let filter = {}
+    filter.id = { $eq: idd };
+
     let mongoClient;
     mongoClient = new MongoClient(uri);
- 
+
     try {
         await mongoClient.connect()
-         const db = mongoClient.db('ecommerce');
-        const collection = db.collection('productss');
-       const cursor = await collection.find().toArray();
-
+         const db = mongoClient.db('ecommercee');
+        const collection = db.collection('products');
+      
+        const id = parseInt(idd);
+        // Find the product using the _id field
+        const cursor = await collection.findOne({ id });
       
        if (!cursor) {
         console.log('No documents found.');
@@ -147,7 +212,6 @@ res.render('checkout', { cartItems });
       } else {
         // Assuming there is a 'name' field in the documents
         
-        console.log('Found name:');
         await mongoClient.close();
         return cursor;
       }
@@ -169,13 +233,12 @@ res.render('checkout', { cartItems });
 
   try {
     await mongoClient.connect();
-    const db = mongoClient.db('ecommerce');
-    const collection = db.collection('productssss');
+    const db = mongoClient.db('ecommercee');
+    const collection = db.collection('products');
 
     // Construct the filter based on the provided parameters
     const numericPriceMin = parseInt(priceMin, 10);
 const numericPriceMax = parseInt(priceMax, 10);
-console.log("sd"+category);
 
 // Construct the filter with numeric values
 const filter = {};

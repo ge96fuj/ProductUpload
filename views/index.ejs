@@ -129,6 +129,9 @@
         <h3><%= product.name %></h3>
         <p>Price: $<%= product.price.toFixed(2) %></p>
         <p>Category: <%= product.category %></p>
+        <a href="#" onclick="sendProduct(<%= product.id %>)" >More informations</a>
+        <% console.log(product.id)%>
+        
         <img src="<%= product.imagePath %>" alt="<%= product.name %> Image">
         <!-- Add to Cart Button -->
         <button onclick="addToCart('<%= product.name %>', <%= product.price %> , '<%= product.imagePath %>' )">Add to Cart</button>
@@ -184,6 +187,20 @@
       cartList.appendChild(listItem);
     });
   }
+
+
+
+function sendProduct(id) {
+
+  window.location.href = `/products?product=${id}`
+
+}
+
+
+
+
+
+
  
   function applyFilters() {
     const categoryFilter = document.getElementById('categoryFilter').value;

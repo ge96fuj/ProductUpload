@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/node_modules/bootswatch/dist/sketchy/bootstrap.min.css">
+  <title><%= product.name %> - Product Description</title>
+</head>
+<body>
+
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title"><%= product.name %></h2>
+      </div>
+      <div class="card-body">
+        <p>Category: <%= product.category %></p>
+        <p>Price: $<%= product.price.toFixed(2) %></p>
+        <p>Description:</p>
+        <p><%= product.description %></p>
+        <img src="<%= product.imagePath %>" alt="<%= product.name %> Image" class="img-fluid">
+
+        
+        <a href="/products" class="btn btn-primary">Back to Products</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="/path/to/your/scripts.js"></script>
+</body>
+</html>
