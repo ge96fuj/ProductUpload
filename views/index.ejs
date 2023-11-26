@@ -59,6 +59,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarColor01">
       <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="/">Home
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
        
       </ul>
     </div>
@@ -205,13 +210,16 @@ function sendProduct(id) {
   function applyFilters() {
     const categoryFilter = document.getElementById('categoryFilter').value;
     console.log("query",categoryFilter)
-    const priceMin = document.getElementById("priceMin").value;
-    const priceMax= document.getElementById("priceMax").value;
+    const priceMin = document.getElementById("priceMin").value || undefined;
+    const priceMax= document.getElementById("priceMax").value || undefined;
 
-    if (priceMin>priceMax) {
-      window.location.href = `/products?`
+  if (priceMin>priceMax && priceMax != undefined) { 
+      console.log("PRICEMAX" , priceMax)
+      window.location.href = `/products?ERROR`
 
     }
+
+    
 
     else{ window.location.href = `/products?category=${categoryFilter}&priceMin=${priceMin}&priceMax=${priceMax}`;}
   }

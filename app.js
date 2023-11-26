@@ -40,6 +40,12 @@ const storage = multer.diskStorage({
  });
  const upload = multer({ storage: storage });
 
+ app.get('/', async (req, res) =>  {
+
+
+res.render('welcome.ejs')
+
+ })
 
 app.get('/products', async (req, res) =>  {
 
@@ -54,7 +60,6 @@ app.get('/products', async (req, res) =>  {
 
    
    const product = await findProductById(description)
-   console.log(product.name)
 
     res.render('productdescription.ejs', { product});
 
@@ -110,8 +115,7 @@ if(newProduct!= null){
 
 
 
-    console.log(req.body); // Form fields
-    console.log(req.file); // Uploaded file details
+  
 
   
 
@@ -228,7 +232,7 @@ try {
  
 
 
- async function loadProductFiltered(category, priceMin, priceMax) {
+ async function loadProductFiltered(categoryy, priceMin, priceMax) {
   const mongoClient = new MongoClient(uri);
 
   try {
@@ -242,13 +246,17 @@ const numericPriceMax = parseInt(priceMax, 10);
 
 // Construct the filter with numeric values
 const filter = {};
-if(category="AllCategory")
+const category = String(categoryy)
+
+if(category !="ALLCategory")
   {
-    category=null
+    filter.category = category
+
   }
-if (category) {
-  filter.category = category
-}
+
+
+
+
 
 
 
